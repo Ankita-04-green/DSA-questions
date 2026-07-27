@@ -1,0 +1,15 @@
+//LeetCode 14
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        int n = strs.length;
+        String first = strs[0];
+        for(int i = 1; i < n; i++){
+            while(!strs[i].startsWith(first)){
+                first = first.substring(0, first.length() - 1);
+            }
+            if(first == "") break;
+        }
+        return first;
+    }
+}
