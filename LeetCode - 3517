@@ -1,0 +1,28 @@
+//LeetCode 3517
+
+class Solution {
+    public String smallestPalindrome(String s) {
+        StringBuilder left = new StringBuilder();
+        int n = s.length();
+        int[] a = new int[26];
+        for(int i = 0; i < n; i++){
+            char ch = s.charAt(i);
+            a[ch - 'a']++;
+        }
+        char middle = '\0';
+        for(int i = 0; i < 26; i++){
+            for(int j = 0; j < a[i]/2; j++){
+                left.append((char)('a' + i));
+            }
+            if(a[i]%2 != 0){
+                middle = (char)('a' + i);
+            }
+        }
+        StringBuilder ans = new StringBuilder(left);
+        if(middle != '\0'){
+            ans.append(middle);
+        }
+        ans.append(new StringBuilder(left).reverse());
+        return ans.toString();
+    }
+}
