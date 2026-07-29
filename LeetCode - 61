@@ -1,0 +1,51 @@
+//LeetCode 61
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head == null) return head;
+        int count = 0;
+        ListNode temp = head;
+        while(temp != null){
+            count++;
+            temp = temp.next;
+        }
+        int target = k%count;
+        if(target == 0) return head;
+        ListNode node = reverse(head, count);
+        int i = 0;
+        temp = node;
+        while(i < target){
+            temp = temp.next;
+            i++;
+        }
+        ListNode n = reverse(node, target);
+        ListNode newN = reverse(temp, count - target);
+        node.next = newN;
+        return n;
+
+    }
+    public ListNode reverse(ListNode head, int k){
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = curr.next;
+        int i = 0;
+        while(i < k && curr != null){
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            if(next != null) next = next.next;
+            i++;
+        }
+        return prev;
+    }
+}
