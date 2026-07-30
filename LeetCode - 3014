@@ -1,0 +1,16 @@
+//LeetCode 3014
+
+class Solution {
+    public int minimumPushes(String word) {
+        int ans = 0;
+        int i = 1;
+        int n = word.length();
+        while(n > 8){
+            ans += (i * 8);
+            i++;
+            n -= 8;
+        }
+        ans += (n * i);
+        return ans;
+    }
+}
