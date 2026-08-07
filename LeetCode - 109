@@ -1,0 +1,32 @@
+//LeetCode 109
+
+class Solution {
+    public TreeNode sortedListToBST(ListNode head) {
+        TreeNode root = null;
+        return sortedListToBST(head, root);
+    }
+    public TreeNode sortedListToBST(ListNode head, TreeNode node){
+        if(head == null){
+            return null;
+        }
+        if(head.next == null){
+            node = new TreeNode(head.val);
+            return node;
+        }
+        ListNode mid = getMid(head);
+        node = new TreeNode(mid.val);
+        node.left = sortedListToBST(head, node.left);
+        node.right = sortedListToBST(mid.next, node.right);
+        return node;
+    }
+    public ListNode getMid(ListNode head){
+        ListNode midP = null;
+        while(head != null && head.next != null){
+            midP = (midP == null)?head:midP.next;
+            head = head.next.next;
+        }
+        ListNode mid = midP.next;
+        midP.next = null;
+        return mid;
+    }
+}
