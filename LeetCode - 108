@@ -1,0 +1,33 @@
+//LeetCode 108
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode sortedArrayToBST(int[] nums) {
+        TreeNode root = null;
+        return sortedArrayToBST(nums, 0, nums.length, root);
+    }
+    public TreeNode sortedArrayToBST(int[] nums, int s, int e, TreeNode node){
+        if(s >= e){
+            return null;
+        }
+        int mid = s + (e - s)/2;
+        node = new TreeNode(nums[mid]);
+        node.left = sortedArrayToBST(nums, s, mid, node.left);
+        node.right =  sortedArrayToBST(nums, mid + 1, e, node.right);
+        return node;
+    }
+}
