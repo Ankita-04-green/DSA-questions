@@ -1,0 +1,39 @@
+//LeetCode 329
+
+class Solution {
+    public int longestIncreasingPath(int[][] matrix) {
+        int ans = 0;
+        int[][] dp = new int[matrix.length][matrix[0].length];
+        for(int i = 0; i < matrix.length; i++){
+            for(int j = 0; j < matrix[0].length; j++){
+                int count = dfs(matrix, i, j, dp);
+                if(count > ans) ans = count;
+            }
+        }
+        return ans;
+    }
+   
+    public int dfs(int[][] matrix, int i, int j, int[][] dp){
+        if(dp[i][j] != 0){
+            return dp[i][j];
+        }
+        int left = 0;
+        int right = 0;
+        int up = 0;
+        int down = 0;
+        if(j > 0 && matrix[i][j] < matrix[i][j - 1]){
+            left = dfs(matrix, i, j - 1, dp);
+        }
+        if(j < matrix[0].length - 1 && matrix[i][j] < matrix[i][j + 1]){
+            right = dfs(matrix, i, j + 1, dp);
+        }
+        if(i > 0 && matrix[i][j] < matrix[i - 1][j]){
+            up = dfs(matrix, i - 1, j, dp);
+        }
+        if(i < matrix.length - 1 && matrix[i][j] < matrix[i + 1][j]){
+            down = dfs(matrix, i + 1, j, dp);
+        }
+        dp[i][j] =  1 + Math.max(Math.max(left, right), Math.max(up, down));
+        return dp[i][j];
+    }
+}
