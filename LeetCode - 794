@@ -1,0 +1,44 @@
+#LeetCode 794
+
+class Solution(object):
+    def validTicTacToe(self, board):
+        """
+        :type board: List[str]
+        :rtype: bool
+        """
+        Xcount = 0
+        Ocount = 0
+        for st in board:
+            for ch in st:
+                if ch == 'X':
+                    Xcount += 1
+                elif ch == 'O':
+                    Ocount += 1
+        
+        if Ocount > Xcount or abs(Xcount - Ocount) > 1:
+            return False
+
+        def win(ch):
+            for i in range(3):
+                if board[i][0] == board[i][1] == board[i][2] == ch:
+                    return True
+            
+            for i in range(3):
+                if board[0][i] == board[1][i] == board[2][i] == ch:
+                    return True
+            
+            if board[0][0] == board[1][1] == board[2][2] == ch:
+                return True
+            if board[0][2] == board[1][1] == board[2][0] == ch:
+                return True
+        
+        Xwin = win('X')
+        Owin = win('O')
+        if Xwin and Owin:
+            return False
+        if Xwin and Xcount != Ocount + 1:
+            return False
+        if Owin and Ocount != Xcount:
+            return False
+            
+        return True
