@@ -1,0 +1,22 @@
+//LeetCode 513
+
+class Solution {
+    int maxHeight = 0;
+    int ans = 0;
+    public int findBottomLeftValue(TreeNode root) {
+        findBottom(root, 1);
+        return ans;
+    }
+    
+    public void findBottom(TreeNode root, int height){
+        if(root == null){
+            return;
+        }
+        if(height > maxHeight){
+            maxHeight = height;
+            ans = root.val;
+        }
+        findBottom(root.left, height + 1);
+        findBottom(root.right, height + 1);
+    }
+}
