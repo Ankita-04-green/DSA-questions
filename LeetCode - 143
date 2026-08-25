@@ -1,0 +1,43 @@
+//LeetCode 143
+
+class Solution {
+    public void reorderList(ListNode head) {
+        if(head.next == null || head.next.next == null){
+            return;
+        }
+        ListNode mid = middleNode(head);
+        ListNode secondHead = reverse(mid);
+        while(head != null && secondHead != null){
+           ListNode front = head.next;
+           head.next = secondHead;
+           head = front;
+           front = secondHead.next;
+           secondHead.next = head;
+           secondHead = front;
+        }
+        if(head != null) head.next = null;
+    }
+    public ListNode middleNode(ListNode head){
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    public ListNode reverse(ListNode head){
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode next = curr.next;
+        while(curr != null){
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+            if(next != null){
+                next = next.next;
+            }
+        }
+        return prev;
+    }
+}
