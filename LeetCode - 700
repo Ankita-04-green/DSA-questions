@@ -1,0 +1,17 @@
+//LeetCode 700
+
+class Solution {
+    public TreeNode ans = null;
+    public TreeNode searchBST(TreeNode root, int val) {
+        if(root.val == val){
+            return root;
+        }
+        if(val < root.val && root.left != null){
+            ans = searchBST(root.left, val);
+        }
+        else if(val > root.val && root.right != null){
+            ans = searchBST(root.right, val);
+        }
+        return ans;
+    }
+}
