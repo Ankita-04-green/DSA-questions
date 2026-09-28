@@ -1,0 +1,20 @@
+//LeetCode 415
+
+class Solution {
+    public String addStrings(String num1, String num2) {
+        int n = num1.length() - 1;
+        int m = num2.length() - 1;
+        int carry = 0;
+        StringBuilder ans = new StringBuilder();
+        while(n >= 0 || m >= 0 || carry != 0){
+            int d1 = (n >= 0)?num1.charAt(n) - '0':0;
+            int d2 = (m >= 0)?num2.charAt(m) - '0':0;
+            int sum = d1 + d2 + carry;
+            ans.append(sum%10);
+            carry = sum/10;
+            n--;
+            m--;
+        }
+        return ans.reverse().toString();
+    }
+}
