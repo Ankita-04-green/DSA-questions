@@ -1,0 +1,69 @@
+//LeetCode 3886 - KMP algorithm used
+
+class Solution {
+    public int sortableIntegers(int[] nums) {
+        int n = nums.length;
+        int[] sorted = nums.clone();
+        Arrays.sort(sorted);
+        int result = 0;
+        for(int i = 1; i <= n; i++){
+            if(n%i != 0) continue;
+            boolean valid = true;
+            for(int start = 0; start < n; start += i){
+                int[] blockNums = Arrays.copyOfRange(nums, start, start + i);
+                int[] temp = Arrays.copyOfRange(sorted, start, start + i);
+                int[] blockSorted = new int[2 * i];
+                System.arraycopy(temp, 0, blockSorted, 0, i);
+                System.arraycopy(temp, 0, blockSorted, i, i);
+                if(!isRotationPossible(blockNums, blockSorted)){
+                    valid = false;
+                    break;
+                }
+            }
+            if(valid) result += i;
+        }
+        return result;
+    }
+    public boolean isRotationPossible(int[] nums, int[] sorted){
+        int n = nums.length;
+        int m = sorted.length;
+        int[] LPS = new int[n];
+        computeLPS(nums, LPS);
+        int i = 0;
+        int j = 0;
+        while(i < m){
+            if(sorted[i] == nums[j]){
+                i++;
+                j++;
+                if(j == n) return true;
+            }
+            else{
+                if(j > 0) j = LPS[j - 1];
+                else i++;
+            }
+        }
+        return false;
+    }
+    public void computeLPS(int[] pattern, int[] lps){
+        int n = pattern.length;
+        lps[0] = 0;
+        int len = 0;
+        int i = 1;
+        while(i < n){
+            if(pattern[i] == pattern[len]){
+                len++;
+                lps[i] = len;
+                i++;
+            }
+            else{
+                if(len != 0){
+                    len = lps[len - 1];
+                }
+                else{
+                    lps[i] = 0;
+                    i++;
+                }
+            }
+        }
+    }
+}
